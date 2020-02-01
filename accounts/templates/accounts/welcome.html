@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+    crossorigin="anonymous">
+    <title>Open Journal</title>
+</head>
+
+
+<style>
+    .register{
+    background: -webkit-linear-gradient(left, #673AB7, #9C27B0);
+    margin-top: 3%;
+    padding: 3%;
+}
+.register-left{
+    text-align: center;
+    color: #fff;
+    margin-top: 4%;
+}
+.register-left input{
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    width: 60%;
+    background: #f8f9fa;
+    font-weight: bold;
+    color: #383d41;
+    margin-top: 30%;
+    margin-bottom: 3%;
+    cursor: pointer;
+}
+.register-right{
+    background: #f8f9fa;
+    border-top-left-radius: 10% 50%;
+    border-bottom-left-radius: 10% 50%;
+}
+.register-left img{
+    margin-top: 15%;
+    margin-bottom: 5%;
+    width: 25%;
+    -webkit-animation: mover 2s infinite  alternate;
+    animation: mover 1s infinite  alternate;
+}
+@-webkit-keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+@keyframes mover {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-20px); }
+}
+.register-left p{
+    font-weight: lighter;
+    padding: 12%;
+    margin-top: -9%;
+}
+.register .register-form{
+    padding: 10%;
+    margin-top: 10%;
+}
+.btnRegister{
+    float: right;
+    margin-top: 10%;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 2%;
+    background: #0062cc;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.register .nav-tabs{
+    margin-top: 3%;
+    border: none;
+    background: #0062cc;
+    border-radius: 1.5rem;
+    width: 28%;
+    float: right;
+}
+.register .nav-tabs .nav-link{
+    padding: 2%;
+    height: 34px;
+    font-weight: 600;
+    color: #fff;
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+.register .nav-tabs .nav-link:hover{
+    border: none;
+}
+.register .nav-tabs .nav-link.active{
+    width: 100px;
+    color: #0062cc;
+    border: 2px solid #0062cc;
+    border-top-left-radius: 1.5rem;
+    border-bottom-left-radius: 1.5rem;
+}
+.register-heading{
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: -15%;
+    color: #495057;
+}
+
+
+
+</style>
+
+
+<body class="w3-light-grey">
+
+<header class="blog-header py-3">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+
+      <div class="col-4 text-center">
+        <a class="w3-xlarge w3-wide w3-text-deep-purple" href="#">Open Journal</a>
+      </div>
+
+    </div>
+  </header>
+
+<div class="container register w3-round">
+    <div class="row">
+                    <div class="col-md-3 register-left">
+<!--                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>-->
+                        <img src="https://c7.uihere.com/files/249/137/309/computer-icons-condoms-penis-others.jpg" alt=""/>
+
+                        <h3>Welcome to Open Journal</h3>
+                        <p>The place to share your deep thoughts and opinions while you remain anonymous</p>
+                    </div>
+
+<!--                    login on laptop and ipad-->
+                    <div class="w3-display-container col-md-9 register-right w3-hide-small">
+                        <div class="w3-display-topright">
+                            <div class="w3-bar w3-padding ">
+                                  <button class="w3-bar-item w3-deep-purple w3-button" onclick="openCity('signup')" style="border-top-left-radius: 16px; border-bottom-left-radius: 16px;">Sign Up</button>
+                                  <button class="w3-bar-item w3-deep-purple w3-button" onclick="openCity('login')"  style="border-top-right-radius: 16px; border-bottom-right-radius: 16px;">Login</button>
+                                </div>
+                        </div>
+
+                        <div class="w3-display-middle" style="width: 500px;">
+                                <div id="signup" class="w3-center city">
+                                     <div class="w3-center col-md-6">
+                                         <h1 class="w3-text-deep-purple w3-left">Sign Up</h1>
+                                         <form method="POST" action="{% url 'register' %}">
+                                             {% csrf_token %}
+                                             <div class="form-group">
+                                                 <input type="text" class="form-control" name="username" placeholder="Username *" value="" />
+                                             </div>
+                                              <div class="form-group">
+                                                  <input type="text" class="form-control" name="email" placeholder="Email *" value="" />
+                                              </div>
+                                              <div class="form-group">
+                                                  <input type="password" class="form-control" name="password1" placeholder="Password *" value="" />
+                                              </div>
+                                              <div class="form-group">
+                                                  <input type="password" class="form-control" name="password2" placeholder="Confirm Password *" value="" />
+                                              </div>
+
+                                             <input type="submit" class="w3-button w3-deep-purple w3-round" value="Sign Up">
+                                         </form>
+                                     </div>
+
+                                </div>
+
+                                <div id="login" class="w3-container w3-display-container city" style="display:none">
+                                  <div class="w3-center col-md-6">
+                                      <h1 class="w3-text-deep-purple w3-left">Login</h1>
+                                         <form method="POST" action="{% url 'login' %}">
+                                             {% csrf_token %}
+                                             <div class="form-group">
+                                                 <input type="text" name="username" class="form-control" placeholder="Username *" value="" />
+                                             </div>
+                                              <div class="form-group">
+                                                  <input type="password" name="password" class="form-control"  placeholder="Password *" value="" />
+                                              </div>
+                                             <input type="submit" class="w3-button w3-deep-purple w3-round" value="Login">
+                                         </form>
+                                     </div>
+                                </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+<!--            login on phone-->
+                <div class="w3-hide-large w3-hide-medium">
+                    <h1>Small Screen</h1>
+                </div>
+
+
+
+<main role="main" class="container w3-margin my-3 p-3 bg-white rounded shadow-sm w3-padding w3-margin">
+
+  <div class="w3-twothird w3-padding">
+    <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
+    <div class="media text-muted pt-3">
+      <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">@username</strong>
+        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+      </p>
+    </div>
+    <div class="media text-muted pt-3">
+      <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#e83e8c"/><text x="50%" y="50%" fill="#e83e8c" dy=".3em">32x32</text></svg>
+      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <strong class="d-block text-gray-dark">@username</strong>
+        Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+      </p>
+    </div>
+
+
+  </div>
+
+  <div class="w3-rest w3-padding">
+    <h6 class="border-bottom border-gray pb-2 mb-0">Suggestions</h6>
+    <div class="media text-muted pt-3">
+      <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <strong class="text-gray-dark">Full Name</strong>
+          <a href="#">Follow</a>
+        </div>
+        <span class="d-block">@username</span>
+      </div>
+    </div>
+    <div class="media text-muted pt-3">
+      <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <strong class="text-gray-dark">Full Name</strong>
+          <a href="#">Follow</a>
+        </div>
+        <span class="d-block">@username</span>
+      </div>
+    </div>
+    <div class="media text-muted pt-3">
+      <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+      <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <strong class="text-gray-dark">Full Name</strong>
+          <a href="#">Follow</a>
+        </div>
+        <span class="d-block">@username</span>
+      </div>
+    </div>
+
+  </div>
+</main>
+</div>
+
+<footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; <span id="date_"></span> Lams</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="#">Privacy</a></li>
+      <li class="list-inline-item"><a href="#">Terms</a></li>
+      <li class="list-inline-item"><a href="#">Support</a></li>
+      <li class="list-inline-item"><a href="#">Api</a></li>
+      <li class="list-inline-item"><a href="#">Jobs</a></li>
+    </ul>
+  </footer>
+
+
+
+<script>
+function openCity(cityName) {
+  var i;
+  var x = document.getElementsByClassName("city");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  document.getElementById(cityName).style.display = "block";
+}
+
+function Login_and_explore(){
+    alert("Login and Explore");
+}
+
+
+<!--Set year in footer-->
+var d = new Date();
+document.getElementById("date_").innerHTML = d.getFullYear();
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<div class="modal fade" id="writeNote" tabindex="-1" role="dialog" aria-labelledby="writeNote" aria-hidden="true">
+<!-- Modal -->
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text" onKeyPress="return taLimit(this)" onKeyUp="return taCount(this,'myCounter')" id="content" name="content" rows=5 wrap="physical" cols=40></textarea>
+          </div>
+          <div class="w3-center">
+            <p id="myCounter" class="w3-left">200</p>
+            <button type="button" class="w3-button w3-purple w3-round w3-small" onclick="document.getElementById('message-text').value ='' ";>
+              Clear</button>
+            <button type="submit" class="w3-button w3-deep-purple w3-round w3-small">Post</button>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+<!--https://stackoverflow.com/questions/7165273/counting-input-chars-use-onkeyup-or-onkeydown-->
+//Count content
+  maxL = 200;
+  var bName = navigator.appName;
+
+  function taLimit(taObj) {
+    if (taObj.value.length == maxL) return false;
+    return true;
+  }
+
+  function taCount(taObj, Cnt) {
+    objCnt = createObject(Cnt);
+    objVal = taObj.value;
+    if (objVal.length > maxL) objVal = objVal.substring(0, maxL);
+    if (objCnt) {
+      if (bName == "Netscape") {
+        objCnt.textContent = maxL - objVal.length;
+      } else {
+        objCnt.innerText = maxL - objVal.length;
+      }
+    }
+    return true;
+  }
+
+  function createObject(objId) {
+    if (document.getElementById) return document.getElementById(objId);
+    else if (document.layers) return eval("document." + objId);
+    else if (document.all) return eval("document.all." + objId);
+    else return eval("document." + objId);
+  } //End Count content
+</script>

@@ -1,0 +1,64 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Page Container -->
+<div class="w3-content w3-margin-top w3-round" style="max-width:1000px;">
+
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+
+    <!-- Left Column -->
+
+      <div class="w3-white w3-text-grey w3-card-4">
+        <div class="w3-third w3-display-container">
+          <img src="https://www.w3schools.com/w3images/avatar_hat.jpg" style="width:100%" alt="Avatar">
+          <div class="w3-display-bottomleft w3-container w3-text-grey">
+            <h2>{{profile.owner}}</h2>
+          </div>
+        </div>
+        <div class="w3-twothird w3-container w3-padding">
+          <p><i class="fa fa-file fa-fw w3-margin-right w3-large w3-text-purple"></i>Notes: {{posts|length}}</p>
+            <p><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-purple"></i>Following: {{am_following|length}}  <span class="w3-text-deep-purple">|</span>  Followers: {{following_me|length}} </p>
+          <p><i class="fa fa-address-card fa-fw w3-margin-right w3-large w3-text-purple"></i>About: {{profile.about_me}}</p>
+          <p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-purple"></i>1224435534</p>
+          <hr>
+
+        </div>
+      </div>
+
+
+    <!-- Right Column -->
+
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <h2 class="w3-text-grey w3-padding-16 w3-center"><i class="fa fa-book fa-fw w3-margin-right w3-xxlarge  w3-text-purple"></i>{{profile.owner}}'s Journal</h2>
+        <br>
+
+        <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
+        <img src="https://www.w3schools.com/w3images/avatar_hat.jpg" alt="Avatar" class="w3-left w3-round w3-margin-right" style="width:60px">
+        <span class="w3-right w3-opacity">1 min</span>
+        <h4>John Doe</h4><br>
+<!--        <hr class="w3-clear">-->
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        <button type="button" class="w3-button w3-small w3-deep-purple w3-round w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button>
+        <button type="button" class="w3-button w3-small w3-deep-purple w3-round w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button>
+        {% if request.user == profile.owner %}
+              <button type="button" class="w3-button w3-right w3-small w3-red w3-border w3-round w3-margin-bottom"><i class="fa fa-trash"></i>  Delete</button>
+        {%endif%}
+          </div>
+
+      </div>
+
+
+
+      </div>
+
+
+  <!-- End Grid -->
+  </div>
+
+  <!-- End Page Container -->
+</div>
+
+
+{% endblock %}

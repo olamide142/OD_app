@@ -1,0 +1,30 @@
+{% load static %}
+
+<div class="w3-container" >
+    <div class="w3-modal-content" style="max-width:25%">
+      <div class="w3-bar">
+         <button class="w3-bar-item w3-hover-pale w3-button " style="width:50%" onclick="document.getElementById('type').value='followers'">
+          followers
+          </button>
+         <button class="w3-bar-item w3-button "  style="width:50%"  onclick="document.getElementById('type').value='following'";>
+             following
+         </button>
+      </div>
+      <div class="w3-container">
+        <p></p>
+        <p>Some text..</p>
+      </div>
+      <footer class="w3-container w3-teal">
+        <p>Modal Footer</p>
+      </footer>
+    </div>
+</div>
+<input type="hidden" id="username" value="{{profile.owner.username}}">
+<input type="hidden" id="type" value="followers"> //default value=followers
+<input type="hidden" id="page" value="1"> //default value=1
+
+
+
+<script>
+
+</script>
