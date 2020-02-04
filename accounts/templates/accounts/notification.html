@@ -1,0 +1,34 @@
+{% extends 'accounts/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Page Container -->
+<div class="w3-content w3-margin-top w3-round" style="max-width:1000px;">
+
+ <div class="w3-large w3-padding">
+    <h6 class="border-bottom border-gray pb-2 mb-0">Recent Activities</h6>
+     {% for notification in notifications %}
+     <a href="#">
+        <div class="media text-muted pt-3">
+          <svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"/><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray wrap">
+            <strong class="d-block text-gray-dark">{{notification.sent_from}}</strong>
+            Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+          </p><span class="w3-right w3-small w3-text-deep-purple">13m ago</span>
+        </div>
+     </a>
+     {% endfor %}
+
+  </div>
+
+  <!-- End Page Container -->
+</div>
+
+
+<script>
+setTimeout(function(){
+    document.getElementById('notification').innerHTML = "";
+    }, 1000);
+
+</script>
+{% endblock %}

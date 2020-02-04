@@ -13,6 +13,9 @@ urlpatterns = [
     # ajax
     path('validate_username/', views.validate_username, name='validate_username'),
     path('get_follows/', views.get_follows, name='get_follows'),
+    path('ajax/update_navbar/', views.updateNavbar, name='update_navbar'),
 
     path('user/<str:username>', views.profile, name='profile'),
+    path('notification/', views.notification, name='notification'),
+    path('messages/', views.chatMessages, name='chatMessages'),
 ]

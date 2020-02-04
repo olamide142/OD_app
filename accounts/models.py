@@ -16,6 +16,7 @@ class Diary(models.Model):
     diary_id = models.CharField(max_length=10, null=True, blank=True)
     owner = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
     about_me = models.CharField(max_length=140, null=True)
+    num_notification = models.BigIntegerField(default=0) #list of recent notifications
     date_created = models.DateTimeField(auto_now_add=True, null = True)
 
     # def save(self, *args, **kwargs):
@@ -86,4 +87,18 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
-# class Follow(models.Model)
+
+class Notification(models.Model):
+    CATEGORY = (
+        ('Like', 'Like'),
+        ('Comment', 'Comment')
+    )
+    owner = models.ForeignKey(Diary, null=True, on_delete=models.CASCADE)
+    sent_from = models.CharField(null=True, max_length=30)
+    type = models.CharField(null=True, blank=True, choices=CATEGORY, max_length=10)
+    link = models.CharField(null=True, max_length=250)
+    date_created = models.DateTimeField(auto_now_add=True, null = True)
+
+
+    def __str__(self):
+        return u'From %s To %s - (%s)' % (self.sent_from, self.owner, self.type)

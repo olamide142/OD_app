@@ -1,4 +1,12 @@
-<div class="modal fade" id="writeNote" tabindex="-1" role="dialog" aria-labelledby="writeNote" aria-hidden="true">
+    <!--Write a New Note Modal -->
+<div class="w3-bottom w3-left w3-margin w3-padding-16">
+   <button class="w3-button w3-padding w3-round w3-deep-purple" data-toggle="modal" data-target="#writeNote">
+     <i class="fa fa-edit fa-fw w3-margin-right w3-large w3-text-white">+</i>
+   </button>
+  </div>
+
+
+    <div class="modal fade" id="writeNote" tabindex="-1" role="dialog" aria-labelledby="writeNote" aria-hidden="true">
 <!-- Modal -->
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -16,7 +24,7 @@
           </div>
           <div class="w3-center">
             <p id="myCounter" class="w3-left">200</p>
-            <button type="button" class="w3-button w3-purple w3-round w3-small" onclick="document.getElementById('message-text').value ='' ";>
+            <button type="button" class="w3-button w3-purple w3-round w3-small" onclick="document.getElementById('message-text').value ='';  document.getElementById('myCounter').innerHTML ='200'">
               Clear</button>
             <button type="submit" class="w3-button w3-deep-purple w3-round w3-small">Post</button>
           </div>

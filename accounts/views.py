@@ -27,15 +27,6 @@ def welcome(request):
 	else:
 		return render(request, 'accounts/welcome.html')
 
-@login_required()
-def profile(request, username):
-	profile = Diary.objects.get(owner__username=username)
-	posts = Post.objects.filter(diary_id = profile.id)
-	am_following = list(Follower.objects.filter(follower_id=profile.id))
-	following_me = list(Follower.objects.filter(following_id=profile.id))
-
-	context = {'profile':profile, 'posts':posts, 'am_following':am_following,  'following_me':following_me,}
-	return render(request, 'accounts/profile.html', context)
 
 
 def loginPage(request):
@@ -82,7 +73,7 @@ def logoutUser(request):
 
 
 
-
+###################   Ajax    ###################
 def validate_username(request):
 	username = request.GET.get('username', None)
 	data = {
@@ -118,3 +109,51 @@ def get_follows(request):
 		json.dumps(am_following),
 		content_type="application/json"
 	)
+
+
+
+
+
+def chatMessages(request):
+	context = {}
+	return render(request, 'accounts/message.html', context)
+
+
+@login_required(login_url='welcome')
+def profile(request, username):
+	profile = Diary.objects.get(owner__username=username)
+	posts = Post.objects.filter(diary_id=profile.id)
+	am_following = list(Follower.objects.filter(follower_id=profile.id))
+	following_me = list(Follower.objects.filter(following_id=profile.id))
+
+	context = {'profile': profile, 'posts': posts, 'am_following': am_following, 'following_me': following_me, }
+
+	return render(request, 'accounts/profile.html', context)
+
+
+@login_required(login_url='welcome')
+def notification(request):
+	# get current users notification
+	diary = Diary.objects.get(owner__username=request.user.username)
+
+	new_notifications = [] #empty list incase to new notification
+	if diary.num_notification > 0:
+		# Query Notication based on the last n (dairy.notification) notications of a particular diary
+		new_notifications = Notification.objects.filter(owner=diary).order_by('-date_created')[:diary.num_notification]
+
+	notifications = Notification.objects.filter(owner=diary).order_by('date_created').reverse()
+	diary.num_notification = 0 #Reset the no. of notifications to 0 siince the notication logo has been clicked
+
+	context = {'new_notifications': new_notifications,'notifications':notifications}
+	return render(request, 'accounts/notification.html', context)
+
+
+
+def updateNavbar(request):
+	# get current users notification
+	diary = Diary.objects.get(owner__username=request.user.username)
+	if diary.num_notification > 0:
+		data = {'notification':diary.num_notification}
+
+	return JsonResponse(data)
+
