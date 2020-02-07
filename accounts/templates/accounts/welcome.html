@@ -47,7 +47,7 @@
 .register-left img{
     margin-top: 15%;
     margin-bottom: 5%;
-    width: 25%;
+    width: 40%;
     -webkit-animation: mover 2s infinite  alternate;
     animation: mover 1s infinite  alternate;
 }
@@ -124,6 +124,7 @@
     <div class="row flex-nowrap justify-content-between align-items-center">
 
       <div class="col-4 text-center">
+          {% load static %}<img src="{% static 'accounts/images/closed.svg' %}" class="w3-hide-small" alt="" style="width:10%;"/>
         <a class="w3-xlarge w3-wide w3-text-deep-purple" href="#">Open Journal</a>
       </div>
 
@@ -133,8 +134,7 @@
 <div class="container register w3-round">
     <div class="row">
                     <div class="col-md-3 register-left">
-<!--                        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>-->
-                        <img src="https://c7.uihere.com/files/249/137/309/computer-icons-condoms-penis-others.jpg" alt=""/>
+                         {% load static %}<img src="{% static 'accounts/images/open.svg' %}" alt="" style="width:40%;"/>
 
                         <h3>Welcome to Open Journal</h3>
                         <p>The place to share your deep thoughts and opinions while you remain anonymous</p>

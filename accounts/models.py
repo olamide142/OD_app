@@ -33,13 +33,13 @@ class Diary(models.Model):
 class Post(models.Model):
     post_id = models.CharField(max_length=10, null=True, blank=True)
     diary = models.ForeignKey(Diary, null=True, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200, null=True)
     body = models.CharField(max_length=1000, null=True)
     no_likes = models.BigIntegerField(null=True, default=0)
     date_created = models.DateTimeField(auto_now_add=True, null = True)
 
     def __str__(self):
-        return self.title
+        return self.body[:100]
+
 
 
 class Comment(models.Model):

@@ -1,0 +1,15 @@
+{% load static%}
+<script src="{% static 'accounts/js/post.js' %}"></script>
+
+ <div class="w3-container w3-small w3-card w3-white w3-round w3-margin w3-padding-large border-primary" id="{{post.post_id}}" style=""><br>
+        <img src="https://www.w3schools.com/w3images/avatar_hat.jpg" alt="Avatar" class="w3-left w3-round w3-margin-right" style="width:60px">
+        <span class="w3-right w3-opacity">1 min</span>
+        <p class="w3-text-purple w3-large">{{post.diary}}</p><br>
+        <p class="w3-padding w3-large">{{post.body}}</p>
+        {% include 'accounts/includes/like_comment_button.html' %}
+        {% if request.user.username == post.diary|safe %}
+              <button id="delete_{{post.post_id}}" onclick="deleteNote({{post.post_id}})" type="button" class="w3-button w3-right w3-small w3-red w3-border w3-round w3-margin-bottom"><i class="fa fa-trash"></i></button>
+        {%endif%}
+
+ </div>
+

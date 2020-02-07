@@ -30,11 +30,11 @@ def welcome(request):
 
 
 def loginPage(request):
+	print(request.POST)
 	form = CreateUserForm()
 	if request.method == 'POST':
 		username = request.POST.get('username')
 		password = request.POST.get('password')
-		print(username)
 		user = authenticate(request, username=username, password=password)
 		if user is not None:
 			login(request, user)
@@ -70,6 +70,69 @@ def allocate_diary_to_new_user(username):
 def logoutUser(request):
 	logout(request)
 	return redirect('welcome')
+
+
+
+
+
+
+def chatMessages(request):
+	context = {}
+	return render(request, 'accounts/message.html', context)
+
+
+@login_required(login_url='welcome')
+def profile(request, username):
+	profile = Diary.objects.get(owner__username=username)
+	posts = Post.objects.filter(diary_id=profile.id).order_by('-date_created')
+	am_following = list(Follower.objects.filter(follower_id=profile.id))
+	following_me = list(Follower.objects.filter(following_id=profile.id))
+
+	context = {'profile': profile, 'posts': posts, 'am_following': am_following, 'following_me': following_me, }
+
+	return render(request, 'accounts/profile.html', context)
+
+
+@login_required(login_url='welcome')
+def notification(request):
+	# get current users notification
+	diary = Diary.objects.get(owner__username=request.user.username)
+
+	new_notifications = [] #empty list incase to new notification
+	if diary.num_notification > 0:
+		# Query Notication based on the last n (dairy.notification) notications of a particular diary
+		new_notifications = Notification.objects.filter(owner=diary).order_by('-date_created')[:diary.num_notification]
+
+	notifications = Notification.objects.filter(owner=diary).order_by('date_created').reverse()
+	diary.num_notification = 0 #Reset the no. of notifications to 0 siince the notication logo has been clicked
+
+	context = {'new_notifications': new_notifications,'notifications':notifications}
+	return render(request, 'accounts/notification.html', context)
+
+
+def update_navbar(request):
+	# get current users notification
+	diary = Diary.objects.get(owner__username=request.user.username)
+	if diary.num_notification > 0:
+		data = {'notification':diary.num_notification}
+
+	return JsonResponse(data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -111,49 +174,35 @@ def get_follows(request):
 	)
 
 
+def addNote(request):
+	if request.method == "POST":
+		note = request.POST.get('note')
+		user = User.objects.get(username=request.user.username)
 
+		diary = Diary.objects.get(owner=user)
+		post = Post.objects.create(post_id=randomId(), diary=diary, body=note)
+		post.save()
+		print(post)
 
-
-def chatMessages(request):
-	context = {}
-	return render(request, 'accounts/message.html', context)
-
-
-@login_required(login_url='welcome')
-def profile(request, username):
-	profile = Diary.objects.get(owner__username=username)
-	posts = Post.objects.filter(diary_id=profile.id)
-	am_following = list(Follower.objects.filter(follower_id=profile.id))
-	following_me = list(Follower.objects.filter(following_id=profile.id))
-
-	context = {'profile': profile, 'posts': posts, 'am_following': am_following, 'following_me': following_me, }
-
-	return render(request, 'accounts/profile.html', context)
-
-
-@login_required(login_url='welcome')
-def notification(request):
-	# get current users notification
-	diary = Diary.objects.get(owner__username=request.user.username)
-
-	new_notifications = [] #empty list incase to new notification
-	if diary.num_notification > 0:
-		# Query Notication based on the last n (dairy.notification) notications of a particular diary
-		new_notifications = Notification.objects.filter(owner=diary).order_by('-date_created')[:diary.num_notification]
-
-	notifications = Notification.objects.filter(owner=diary).order_by('date_created').reverse()
-	diary.num_notification = 0 #Reset the no. of notifications to 0 siince the notication logo has been clicked
-
-	context = {'new_notifications': new_notifications,'notifications':notifications}
-	return render(request, 'accounts/notification.html', context)
-
-
-
-def updateNavbar(request):
-	# get current users notification
-	diary = Diary.objects.get(owner__username=request.user.username)
-	if diary.num_notification > 0:
-		data = {'notification':diary.num_notification}
-
+		data = {
+			'stat': "Success",
+			'post_id':post.post_id
+		}
 	return JsonResponse(data)
 
+
+def deleteNote(request):
+	print("YOUR CODE MADE IT HERE HURRAY")
+	if request.method == "POST":
+		note_id = request.POST.get('note_id')
+		user = User.objects.get(username=request.user.username)
+
+		diary = Diary.objects.get(owner=user)
+		post = Post.objects.get(post_id=note_id, diary=diary)
+		post.delete()
+		print(post)
+
+		data = {
+			'stat': "Success",
+		}
+	return JsonResponse(data)
