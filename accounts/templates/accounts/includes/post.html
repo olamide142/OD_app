@@ -8,8 +8,7 @@
         <p class="w3-padding w3-large">{{post.body}}</p>
         {% include 'accounts/includes/like_comment_button.html' %}
         {% if request.user.username == post.diary|safe %}
-              <button id="delete_{{post.post_id}}" onclick="deleteNote({{post.post_id}})" type="button" class="w3-button w3-right w3-small w3-red w3-border w3-round w3-margin-bottom"><i class="fa fa-trash"></i></button>
+              <button id="delete_{{post.post_id}}"  type="button" class="w3-button w3-right w3-border w3-round w3-margin-bottom"><i class="fa fa-trash w3-large w3-text-red"></i></button>
         {%endif%}
 
  </div>
-

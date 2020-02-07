@@ -14,7 +14,7 @@ $(document).ready(function(){
         success: function (data) {
             $("#post_tray").prepend(data.post_id);
 //            $("#writeNote").attr("aria-hidden", "false");
-            alert("Success");
+            console.log("Success");
         }
     });
   });

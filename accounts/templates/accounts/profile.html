@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="w3-twothird w3-container w3-padding">
-          <p><i class="fa fa-file fa-fw w3-margin-right w3-large w3-text-purple"></i>Notes: {{posts|length}}</p>
+          <p><i class="fa fa-file fa-fw w3-margin-right w3-large w3-text-purple"></i>Notes: <span id="diary_note_length">{{posts|length}}</span></p>
             <p><i class="fa fa-users fa-fw w3-margin-right w3-large w3-text-purple"></i>Following: {{am_following|length}}  <span class="w3-text-deep-purple">|</span>  Followers: {{following_me|length}} </p>
           <p><i class="fa fa-address-card fa-fw w3-margin-right w3-large w3-text-purple"></i>About: {{profile.about_me}}</p>
           <hr>
@@ -35,7 +35,15 @@
                 {% for post in posts %}
                 {% include 'accounts/includes/post.html' %}
                 {% endfor %}
+
+
+              {% if posts|length == 0 %}
+              <h1>I REMEMBER WHEN I WAS A SOLDIER</h1>
+              {% endif %}
               </div>
+
+
+
       </div>
 
       </div>
