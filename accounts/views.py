@@ -85,8 +85,26 @@ def chatMessages(request):
 def profile(request, username):
 	profile = Diary.objects.get(owner__username=username)
 	posts = Post.objects.filter(diary_id=profile.id).order_by('-date_created')
-	am_following = list(Follower.objects.filter(follower_id=profile.id))
-	following_me = list(Follower.objects.filter(following_id=profile.id))
+
+	am_f = list(Follower.objects.filter(follower_id=profile.id))
+	# To convert the query list from
+	# <Follower: xlamide follows bolanle>, <Follower: xlamide follows django>
+	# to ['bolanle', 'django']
+	am_following = []
+	for a in am_f:
+		txt = str(a)
+		x = txt.split(" ")
+		am_following.append(x[2])
+
+	f_me = list(Follower.objects.filter(following_id=profile.id))
+	# To convert the query list from
+	# <Follower: xlamide follows django>, <Follower: lams follows django>
+	# to ['xalmide', 'lams']
+	following_me = []
+	for f in f_me:
+		txt = str(f)
+		x = txt.find("follows")
+		following_me.append(txt[0:x].strip())
 
 	context = {'profile': profile, 'posts': posts, 'am_following': am_following, 'following_me': following_me, }
 
@@ -110,21 +128,13 @@ def notification(request):
 	return render(request, 'accounts/notification.html', context)
 
 
-def update_navbar(request):
+@login_required(login_url='welcome')
+def update_nav(request):
 	# get current users notification
 	diary = Diary.objects.get(owner__username=request.user.username)
 	if diary.num_notification > 0:
-		data = {'notification':diary.num_notification}
-
+		data = {'notification': diary.num_notification}
 	return JsonResponse(data)
-
-
-
-
-
-
-
-
 
 
 
@@ -167,11 +177,7 @@ def get_follows(request):
 # 	data = {
 # 		'return_list' : return_list,
 # 	}
-	return_list = json.dumps(am_following)
-	return HttpResponse(
-		json.dumps(am_following),
-		content_type="application/json"
-	)
+
 
 
 def addNote(request):
@@ -205,4 +211,29 @@ def deleteNote(request):
 		data = {
 			'stat': "Success",
 		}
+	return JsonResponse(data)
+
+
+def follow(request):
+	if request.method == "POST":
+		if request.POST.get('following') != request.user.username:
+			if request.POST.get('action') == 'Follow':
+				print("HERE1")
+				follower = Diary.objects.get(owner__username=request.user.username)
+				following = Diary.objects.get(owner__username=request.POST.get('following'))
+				follow = Follower.objects.create(follower=follower, following=following, status="%s follows %s"%(follower, following))
+				follow.save()
+			elif request.POST.get('action') == 'Unfollow':
+				follower = Diary.objects.get(owner__username=request.user.username)
+				following = Diary.objects.get(owner__username=request.POST.get('following'))
+				follow = Follower.objects.get(follower=follower, following=following,status="%s follows %s" % (follower, following))
+				follow.delete()
+			data = {
+				'stat':"Success",
+			}
+		else:
+			data = {
+				'stat':"You can't Follow Yourself"
+			}
+
 	return JsonResponse(data)
