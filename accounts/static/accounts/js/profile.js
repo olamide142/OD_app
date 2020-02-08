@@ -46,7 +46,3 @@ $(document).ready(function(){
 
 });
 
-
-function get_follows(){
-
-}

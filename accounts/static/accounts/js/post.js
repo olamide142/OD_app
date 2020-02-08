@@ -36,11 +36,11 @@ $(document).ready(function(){
                 success: function (data) {
                     console.log("Success");
         //        Make the post <div> FadeOut
-                  $("#"+note_id).fadeOut(2000);
+                  $("#"+note_id).fadeOut(1000);
         //        Update Diary note length in profile section
-//                  var diary_note_length = parseInt($("#diary_note_length").text());
-//                  diary_note_length -= 1;
-//                  $("#diary_note_length").text(''+diary_note_length);
+                  var diary_note_length = Number($("#diary_note_length").text());
+                  diary_note_length -= 1;
+                  $("#diary_note_length").text(''+diary_note_length);
 
                 }
         });

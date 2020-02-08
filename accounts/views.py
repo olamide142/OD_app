@@ -81,32 +81,14 @@ def chatMessages(request):
 	return render(request, 'accounts/message.html', context)
 
 
-@login_required(login_url='welcome')
 def profile(request, username):
 	profile = Diary.objects.get(owner__username=username)
 	posts = Post.objects.filter(diary_id=profile.id).order_by('-date_created')
 
-	am_f = list(Follower.objects.filter(follower_id=profile.id))
-	# To convert the query list from
-	# <Follower: xlamide follows bolanle>, <Follower: xlamide follows django>
-	# to ['bolanle', 'django']
-	am_following = []
-	for a in am_f:
-		txt = str(a)
-		x = txt.split(" ")
-		am_following.append(x[2])
+	am_following = clean_list_of_followers_and_following(profile_id=profile.id, category="am_f")
+	following_me = clean_list_of_followers_and_following(profile_id=profile.id, category="f_me")
 
-	f_me = list(Follower.objects.filter(following_id=profile.id))
-	# To convert the query list from
-	# <Follower: xlamide follows django>, <Follower: lams follows django>
-	# to ['xalmide', 'lams']
-	following_me = []
-	for f in f_me:
-		txt = str(f)
-		x = txt.find("follows")
-		following_me.append(txt[0:x].strip())
-
-	context = {'profile': profile, 'posts': posts, 'am_following': am_following, 'following_me': following_me, }
+	context = {'profile': profile, 'posts': posts, 'am_following': am_following, 'following_me': following_me}
 
 	return render(request, 'accounts/profile.html', context)
 
@@ -156,28 +138,28 @@ def validate_username(request):
 	return JsonResponse(data)
 
 def get_follows(request):
-	username = request.GET.get('username', None)
-	type = request.GET.get('type', None)
+	username = request.GET.get('username')
+	type = request.GET.get('type')
 	page = request.GET.get('page')
 
 	profile = Diary.objects.get(owner__username=username)
-	am_following = list(Follower.objects.filter(follower_id=profile.id))
-	following_me = list(Follower.objects.filter(following_id=profile.id))
 
-# using the Paginator class to state pagination
-# 	if type == "following":
-# 		pag = Paginator(am_following, 2)
-# 	else:
-# 		pag = Paginator(following_me, 2)
-#
-# 	return_list = pag.page(int(page)).object_list
-# 	print(return_list)
-#
-# 	 # response json data
-# 	data = {
-# 		'return_list' : return_list,
-# 	}
+	if type == "Followers":
+		following_me = clean_list_of_followers_and_following(profile_id=profile.id, category="f_me")
+		pag = Paginator(following_me, 1)
+	elif type == "Following":
+		am_following = clean_list_of_followers_and_following(profile_id=profile.id, category="am_f")
+		pag = Paginator(am_following, 1)
 
+	return_list = pag.page(int(page)).object_list
+	print(return_list)
+
+	# response json data
+	data = {
+		'return_list' : return_list,
+	}
+
+	return JsonResponse(data)
 
 
 def addNote(request):
@@ -218,7 +200,6 @@ def follow(request):
 	if request.method == "POST":
 		if request.POST.get('following') != request.user.username:
 			if request.POST.get('action') == 'Follow':
-				print("HERE1")
 				follower = Diary.objects.get(owner__username=request.user.username)
 				following = Diary.objects.get(owner__username=request.POST.get('following'))
 				follow = Follower.objects.create(follower=follower, following=following, status="%s follows %s"%(follower, following))
@@ -237,3 +218,34 @@ def follow(request):
 			}
 
 	return JsonResponse(data)
+
+
+def clean_list_of_followers_and_following(profile_id, category):
+	if category == "am_f":
+		am_f = list(Follower.objects.filter(follower_id=profile_id))
+		# To convert the query list from
+		# <Follower: xlamide follows bolanle>, <Follower: xlamide follows django>
+		# to ['bolanle', 'django']
+		am_following = []
+		for a in am_f:
+			txt = str(a)
+			x = txt.split(" ")
+			am_following.append(x[2])
+		return am_following
+
+	else:
+		f_me = list(Follower.objects.filter(following_id=profile_id))
+		# To convert the query list from
+		# <Follower: xlamide follows django>, <Follower: lams follows django>
+		# to ['xalmide', 'lams']
+		following_me = []
+		for f in f_me:
+			txt = str(f)
+			x = txt.find("follows")
+			following_me.append(txt[0:x].strip())
+		return following_me
+	
+
+def scream_HERE():
+	for i in range(10):
+		print("HERE [+] HERE [+] HERE [+] HERE")
