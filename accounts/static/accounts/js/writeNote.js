@@ -12,9 +12,13 @@ $(document).ready(function(){
         url: '/ajax/addNote/',
         dataType: 'json',
         success: function (data) {
+<<<<<<< HEAD
             prepend_new_note_to_top_of_post_tray(id=data.post_id, body=data.body);
+=======
+//            $("#post_tray").prepend("ssssss");
+>>>>>>> 5372f3c69df8f05df74dcfb3766390086ccc6334
 //            $("#writeNote").attr("aria-hidden", "false");
-            console.log("Success");
+            console.log("This guy");
         }
     });
   });
