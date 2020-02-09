@@ -193,6 +193,7 @@ def deleteNote(request):
 
 		data = {
 			'stat': "Success",
+			'id': note_id
 		}
 	return JsonResponse(data)
 

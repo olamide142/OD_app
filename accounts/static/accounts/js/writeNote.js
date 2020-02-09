@@ -116,14 +116,9 @@ function delete_note(id){
                 url: '/ajax/deleteNote/',
                 dataType: 'json',
                 success: function (data) {
+                  $("#"+data.id).fadeOut();
         //        Make the post <div> FadeOut
-                  $("#"+del_id).fadeOut(500);
-                  console.log("Success");
-        //        Update Diary note length in profile section
-                  var diary_note_length = Number($("#diary_note_length").text());
-                  diary_note_length -= 1;
-                  $("#diary_note_length").text(''+diary_note_length);
-
+//                  console.log("Success");
                 }
         });
     }
