@@ -12,9 +12,9 @@ $(document).ready(function(){
         url: '/ajax/addNote/',
         dataType: 'json',
         success: function (data) {
-            $("#post_tray").prepend(data.post_id);
+//            $("#post_tray").prepend("ssssss");
 //            $("#writeNote").attr("aria-hidden", "false");
-            console.log("Success");
+            console.log("This guy");
         }
     });
   });
