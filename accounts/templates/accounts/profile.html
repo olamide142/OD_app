@@ -74,6 +74,25 @@
   </div>
 </div>
 
+<!--Template Div for notes-->
+ <div class="w3-container w3-small w3-card w3-white w3-round w3-margin w3-padding-large border-primary" id="temp" style="display: none;"><br>
+        <img src="https://www.w3schools.com/w3images/avatar_hat.jpg" alt="Avatar" class="w3-left w3-round w3-margin-right" style="width:60px">
+        <span id="temp_time" class="w3-right w3-opacity">...</span>
+        <p id="temp_diary_name" class="w3-text-purple w3-large">{{request.user.username}}</p><br>
+        <p id="temp_body" class="w3-padding w3-large">...</p>
+         <button ondblclick="changeColor(this)" type="button" class="w3-button w3-small w3-border w3-round w3-margin-bottom w3-hover-0" id="{{post.id}}">
+             <i class="fa fa-heart">
+                 <span class="badge badge-pill w3-purple align-text-bottom" id=""></span>
+             </i>
+         </button>
+        <button type="button" class="w3-button w3-small w3-border w3-round w3-margin-bottom " data-toggle="modal" data-target="#exampleModalLong">
+            <i class="fa fa-comment">
+                <span class="badge badge-pill w3-purple align-text-bottom"></span>
+            </i>
+        </button>
+        <button id="temp_delete" onclick="delete_note(this)" type="button" class="w3-button w3-right w3-border w3-round w3-margin-bottom"><i class="fa fa-trash w3-large w3-text-red"></i></button>
+ </div>
+
 
 {% include 'accounts/includes/follows.html' %}
 {% endblock %}

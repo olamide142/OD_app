@@ -12,7 +12,7 @@ $(document).ready(function(){
         url: '/ajax/addNote/',
         dataType: 'json',
         success: function (data) {
-            $("#post_tray").prepend(data.post_id);
+            prepend_new_note_to_top_of_post_tray(id=data.post_id, body=data.body);
 //            $("#writeNote").attr("aria-hidden", "false");
             console.log("Success");
         }
@@ -69,3 +69,62 @@ function getCookie(name) {
     return cookieValue;
 }
 
+
+
+function prepend_new_note_to_top_of_post_tray(id, body){
+//Ok calm down lams i see you came back
+//to read this code. This is exactly what you
+//were trying to do
+//>>  when a user is on his profie page
+//    and he writes a note, this function is to
+//    run after ajax submition was successful.
+//    the job of the function is to clone an empty
+//    div that contains the template for how a note
+//    would appear, after cloning into a variable
+//    it prepends that new note <div> into the post_tray
+//    (thats the board with all the posts... i hope that made sense
+//    if it doesn't just write it all over or blow your brains out)
+
+     $temp1 = $('#temp').clone();
+//     change the id from temp to the post_id that was returned with the ajax response
+     $temp1.attr("id", id);
+//     make the div display
+     $temp1.addClass("w3-show");
+//     Set the id of all child element
+      $temp1.children()[2].innerText = 'just now';
+      $temp1.children()[5].innerText = body;
+      $temp1.children()[8].id = 'delete_'+id;
+     $temp1.prependTo('#post_tray');
+
+}
+
+
+
+
+function delete_note(id){
+    del_id = this.id;
+    var note_id = "delete_"+this.id;
+    if (note_id.search('delete_') != -1){
+//        Remove the substring 'delete_' to get the ID of post
+        note_id = note_id.replace('delete_','');
+    //    csrfToken since am sending a post request
+        var csrftoken = getCookie('csrftoken');
+
+        $.ajax({
+                type: 'POST',
+                data: {'note_id':note_id, 'csrfmiddlewaretoken':csrftoken},
+                url: '/ajax/deleteNote/',
+                dataType: 'json',
+                success: function (data) {
+        //        Make the post <div> FadeOut
+                  $("#"+del_id).fadeOut(500);
+                  console.log("Success");
+        //        Update Diary note length in profile section
+                  var diary_note_length = Number($("#diary_note_length").text());
+                  diary_note_length -= 1;
+                  $("#diary_note_length").text(''+diary_note_length);
+
+                }
+        });
+    }
+}

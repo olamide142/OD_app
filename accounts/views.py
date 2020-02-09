@@ -174,7 +174,8 @@ def addNote(request):
 
 		data = {
 			'stat': "Success",
-			'post_id':post.post_id
+			'post_id':post.post_id,
+			'body': note
 		}
 	return JsonResponse(data)
 
@@ -249,3 +250,4 @@ def clean_list_of_followers_and_following(profile_id, category):
 def scream_HERE():
 	for i in range(10):
 		print("HERE [+] HERE [+] HERE [+] HERE")
+

@@ -19,7 +19,6 @@ function getCookie(name) {
 
 $(document).ready(function(){
   $("button").click(function(){
-
 //    check if the button clicked was a delete button
     var note_id = this.id;
     if (note_id.search('delete_') != -1){
@@ -36,7 +35,7 @@ $(document).ready(function(){
                 success: function (data) {
                     console.log("Success");
         //        Make the post <div> FadeOut
-                  $("#"+note_id).fadeOut(1000);
+                  $("#"+note_id).fadeOut(500);
         //        Update Diary note length in profile section
                   var diary_note_length = Number($("#diary_note_length").text());
                   diary_note_length -= 1;
@@ -47,4 +46,5 @@ $(document).ready(function(){
     }
   });
 });
+
 
