@@ -1,11 +1,11 @@
-<button ondblclick="changeColor(this)" type="button" class="w3-button w3-small w3-border w3-round w3-margin-bottom w3-hover-0" id="{{post.id}}">
+<button id="like_{{post.post_id}}" ondblclick="changeColor(this)" type="button" class="w3-button w3-small w3-border w3-round w3-margin-bottom w3-hover-0" id="{{post.id}}">
      <i class="fa fa-heart">
          <span class="badge badge-pill w3-purple align-text-bottom" id="count_{{post.id}}">27</span>
      </i>
 </button>
 
 
-<button type="button" class="w3-button w3-small w3-border w3-round w3-margin-bottom " id="" data-toggle="modal" data-target="#exampleModalLong">
+<button id="comment_{{post.post_id}}" type="button" class="w3-button w3-small w3-border w3-round w3-margin-bottom " id="" data-toggle="modal" data-target="#exampleModalLong">
     <i class="fa fa-comment">
         <span class="badge badge-pill w3-purple align-text-bottom">27</span>
     </i>

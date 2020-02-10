@@ -97,6 +97,7 @@ function prepend_new_note_to_top_of_post_tray(id, body){
 //     Set the id of all child element
       $temp1.children()[2].innerText = 'just now';
       $temp1.children()[5].innerText = body;
+      $temp1.children()[7].id = 'comment_'+id;
       $temp1.children()[8].id = 'delete_'+id;
      $temp1.prependTo('#post_tray');
 
